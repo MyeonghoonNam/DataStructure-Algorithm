@@ -1,3 +1,4 @@
+'use strict'
 class MyArray {
   constructor(){
     this.length = 0;
