@@ -1,18 +1,20 @@
 'use strict';
 
-function insertionSort(array) {
-  for (let i = 1; i < array.length; i++) {
-    let cur = array[i];
-    let left = i - 1;
-    while (left >= 0 && array[left] > cur) {
-      array[left + 1] = array[left];
-      left--;
+function insertionSort(arr) {
+  for (let i = 1; i < arr.length; i++) {
+    const cur = arr[i];
+    let leftIdx = i - 1;
+
+    while (leftIdx >= 0 && arr[leftIdx] > cur) {
+      [arr[leftIdx], arr[leftIdx + 1]] = [arr[leftIdx + 1], arr[leftIdx]];
+
+      leftIdx--;
     }
-    array[left + 1] = cur;
-    console.log(`${i}회전: ${array}`);
+
+    console.log(`${i}회전 : ${arr}`);
   }
 
-  return array;
+  return arr;
 }
 
-console.log(insertionSort([5, 4, 3, 2, 1]));
+console.log(insertionSort([3, 7, 2, 5, 1, 4]));
