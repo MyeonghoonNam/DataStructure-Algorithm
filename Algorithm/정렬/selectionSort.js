@@ -1,20 +1,26 @@
-function selectionSort(array) {
-  for (let i = 0; i < array.length; i++) {
-    let minIndex = i;
-    for (let j = i + 1; j < array.length; j++) {
-      if (array[minIndex] > array[j]) {
-        minIndex = j;
+'use strict';
+
+function selectionSort(arr) {
+  for (let i = 0; i < arr.length - 1; i++) {
+    let minIdx = i;
+
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[minIdx] > arr[j]) {
+        minIdx = j;
       }
     }
-    if (minIndex !== i) {
-      let swap = array[minIndex];
-      array[minIndex] = array[i];
-      array[i] = swap;
+
+    if (minIdx !== i) {
+      [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
     }
-    console.log(`${i}회전: ${array}`);
   }
 
-  return array;
+  return arr;
 }
 
-console.log(selectionSort([5, 4, 3, 2, 1]));
+console.log(
+  selectionSort([
+    710, 509, 733, 224, 654, 154, 474, 166, 699, 102, 72, 272, 176, 450, 390,
+    217, 928, 641, 210, 892,
+  ])
+);
