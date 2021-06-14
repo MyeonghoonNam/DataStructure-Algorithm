@@ -15,7 +15,7 @@ function BinarySearch(arr, data) {
 
 function Solution() {
   const arr = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 21, 24, 26, 27, 28,
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 21, 24, 26, 27,
   ];
 
   const findData = 14;
