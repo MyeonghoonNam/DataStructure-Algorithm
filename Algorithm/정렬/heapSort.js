@@ -1,5 +1,3 @@
-'use strict';
-
 function HeapSort(arr) {
   for (let i = parseInt(arr.length / 2); i >= 0; i--) {
     Heapify(arr, i);
