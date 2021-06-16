@@ -74,7 +74,7 @@ class SinglyLinkedList {
     return removeNode.data;
   }
 
-  // 리스트의 맨 앞에 데이터 삽입 : 탐색 O(1) + 삭제 O(1) => O(1)
+  // 리스트의 맨 앞에 데이터 삽입 : 탐색 O(1) + 삽입 O(1) => O(1)
   prepend(value) {
     const newNode = new Node(value);
 
@@ -114,18 +114,18 @@ class SinglyLinkedList {
     return removeNode;
   }
 
-  // 맨 앞과 뒤를 제외한 임의의 위치에 데이터 삽입 : 탐색 O(n) + 삭제 O(1) => O(n)
+  // 맨 앞과 뒤를 제외한 임의의 위치에 데이터 삽입 : 탐색 O(n) + 삽입 O(1) => O(n)
   insert(idx, value) {
     if (idx >= this.length) {
       // 리스트에 존재하지 않은 인덱스 이다.
-      // 그러므로 리스트의 맨 뒤에 추가, append 시간복잡도 반영
+      // 그러므로 리스트의 맨 뒤에 삽입, append 시간복잡도 반영
 
       console.log(
         '리스트에 존재하지 않는 인덱스이므로 리스트의 마지막에 데이터를 삽입하겠습니다.'
       );
       return this.append(value);
     } else if (idx === 0) {
-      // 리스트의 맨 앞에 추가, prepend 시간복잡도 반영
+      // 리스트의 맨 앞에 삽입, prepend 시간복잡도 반영
       return this.prepend(value);
     }
 
