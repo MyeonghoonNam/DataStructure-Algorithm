@@ -20,12 +20,13 @@ class SinglyLinkedList {
     let count = 0;
 
     while (count !== idx) {
-      if (!curNode) {
-        console.log('해당 위치의 데이터가 존재 하지 않습니다.\n');
-      }
-
       curNode = curNode.link;
       count++;
+    }
+
+    if (!curNode) {
+      console.log('해당 위치의 데이터가 존재 하지 않습니다.\n');
+      return;
     }
 
     return curNode;
@@ -35,7 +36,7 @@ class SinglyLinkedList {
   append(value) {
     const newNode = new Node(value);
 
-    if (!this.head) {
+    if (this.isEmpty()) {
       this.head = newNode;
       this.tail = newNode;
     } else {
@@ -51,6 +52,12 @@ class SinglyLinkedList {
   // 리스트의 맨 끝 데이터 삭제 : 탐색 O(n) + 삭제 O(1) => O(n)
   removeLast() {
     const removeNode = this.tail;
+
+    if (this.isEmpty()) {
+      console.log('이미 데이터가 존재 하지 않습니다.');
+
+      return;
+    }
 
     if (this.length === 1) {
       this.head = null;
@@ -78,7 +85,7 @@ class SinglyLinkedList {
   prepend(value) {
     const newNode = new Node(value);
 
-    if (!this.head) {
+    if (this.isEmpty()) {
       this.head = newNode;
       this.tail = newNode;
     } else {
@@ -97,8 +104,8 @@ class SinglyLinkedList {
   removeFirst() {
     const removeNode = this.head;
 
-    if (!this.head) {
-      console.log('이미 데이터가 존재 하지 않습니다.');
+    if (this.isEmpty()) {
+      console.log('이미 데이터가 존재하지 않습니다.');
 
       return;
     }
@@ -108,8 +115,9 @@ class SinglyLinkedList {
       this.tail = null;
     } else {
       this.head = removeNode.link;
-      this.length--;
     }
+
+    this.length--;
 
     return removeNode;
   }
@@ -165,6 +173,11 @@ class SinglyLinkedList {
     return removeNode;
   }
 
+  // 리스트의 데이터 포함 여부
+  isEmpty() {
+    return this.length === 0 ? true : false;
+  }
+
   // 리스트의 요소들을 보기 쉽게 프린트
   printList() {
     let cur = this.head;
@@ -176,10 +189,12 @@ class SinglyLinkedList {
     }
 
     if (str.length === 0) {
-      console.log('데이터가 존재 하지 않습니다.\n');
+      console.log('데이터가 존재하지 않습니다.\n');
     } else {
       console.log(`List Size : ${this.length} \n${str} \n`);
     }
+
+    return;
   }
 }
 
