@@ -74,7 +74,7 @@ class BinarySearchTree {
 
   // 노드 삭제
   remove(value) {
-    const findNode = (node, value) => {
+    const removeNode = (node, value) => {
       // 트리가 존재하지 않은 경우
       if (!node) return null;
 
@@ -90,6 +90,7 @@ class BinarySearchTree {
           return node.right;
         } else {
           // 왼쪽, 오른쪽 모두 자식노드가 있는 경우
+          // 삭제할 노드의 오른쪽 자식 중에서 가장 왼쪽 아래의 자식을 선택하여 삭제할 노드의 위치로 변경하는 방법 사용
           let curNode = node.right;
 
           while (curNode.left) {
@@ -97,20 +98,20 @@ class BinarySearchTree {
           }
 
           node.value = curNode.value;
-          node.right = findNode(node.right, curNode.value);
+          node.right = removeNode(node.right, curNode.value);
 
           return node;
         }
       } else if (value < node.value) {
-        node.left = findNode(node.left, value);
+        node.left = removeNode(node.left, value);
         return node;
       } else {
-        node.right = findNode(node.right, value);
+        node.right = removeNode(node.right, value);
         return node;
       }
     };
 
-    this.root = findNode(this.root, value);
+    this.root = removeNode(this.root, value);
     this.length--;
   }
 
@@ -180,6 +181,7 @@ bst.insert(10);
 bst.insert(1);
 bst.insert(6);
 bst.insert(14);
+bst.insert(9);
 bst.insert(4);
 bst.insert(7);
 bst.insert(13);
@@ -196,7 +198,7 @@ console.log('----------');
 bst.postOrder();
 console.log('----------');
 
-bst.remove(6);
+bst.remove(10);
 bst.preOrder();
 
-console.log(bst);
+console.log(bst.root);
