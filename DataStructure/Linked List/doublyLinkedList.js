@@ -183,10 +183,14 @@ class DoublyLinkedList {
     if (str.length === 0) {
       console.log('데이터가 존재하지 않습니다.\n');
     } else {
-      console.log(`List Size : ${this.length} \n${str} \n`);
+      console.log(`List Size : ${this.size()} \n${str} \n`);
     }
 
     return;
+  }
+
+  size() {
+    return this.length;
   }
 }
 
