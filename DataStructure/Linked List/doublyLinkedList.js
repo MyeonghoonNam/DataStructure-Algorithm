@@ -163,6 +163,10 @@ class DoublyLinkedList {
 
     prevNode.next = removeNode.next;
     removeNode.next.prev = prevNode;
+
+    this.length--;
+
+    return removeNode;
   }
 
   // 리스트의 데이터 포함 여부
