@@ -132,17 +132,7 @@ trie.insert('cd');
 trie.insert('catalina');
 
 console.log(trie.autoComplete('cat'));
-
-// trie.insert('be');
-// trie.insert('bee');
-// trie.insert('can');
-// trie.insert('cat');
-// trie.insert('cd');
-
-// console.log(trie.autoComplete('c'));
-
-
-// console.log(trie.search('can')); // 찾아야함
-// console.log(trie.search('cbn'));
-// console.log(trie.search('bee')); // 찾아야함
-// console.log(trie.search('bt'));
+console.log(trie.search('can')); // 찾아야함
+console.log(trie.search('cbn'));
+console.log(trie.search('bee')); // 찾아야함
+console.log(trie.search('bt'));
