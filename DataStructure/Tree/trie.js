@@ -96,7 +96,7 @@ class Trie {
 
     const findNode = this.search(string); // 자동검색을 위한 입력 단어의 노드
 
-    if(!rootNode) return; // 입력단어가 존재 하지 않는 경우
+    if(!findNode) return; // 입력단어가 존재 하지 않는 경우
 
     const queue = new Queue();
     const result = [] // 자동완성단어의 리스트
