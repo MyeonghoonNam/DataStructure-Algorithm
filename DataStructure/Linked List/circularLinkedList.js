@@ -3,11 +3,12 @@
 class Node {
   constructor(value) {
     this.data = value;
-    this.link = null;
+    this.prev = null;
+    this.next = null;
   }
 }
 
-class SinglyLinkedList {
+class CircularLinkedList {
   constructor() {
     this.head = null;
     this.tail = null;
@@ -20,12 +21,14 @@ class SinglyLinkedList {
     let count = 0;
 
     while (count !== idx) {
-      curNode = curNode.link;
+      if(curNode.next === this.head) break;
+
+      curNode = curNode.next;
       count++;
     }
 
     if (!curNode) {
-      console.log('해당 위치의 데이터가 존재 하지 않습니다.\n');
+      console.log('해당 위치에 데이터가 존재하지 않습니다.');
       return;
     }
 
@@ -36,12 +39,17 @@ class SinglyLinkedList {
   append(value) {
     const newNode = new Node(value);
 
-    if (this.isEmpty()) {
+    if (!this.head) {
       this.head = newNode;
       this.tail = newNode;
     } else {
-      this.tail.link = newNode;
+      this.tail.next = newNode;
+      newNode.prev = this.tail;
+      newNode.next = this.head;
+
+      this.head.prev = newNode;
       this.tail = newNode;
+
     }
 
     this.length++;
@@ -49,36 +57,27 @@ class SinglyLinkedList {
     return;
   }
 
-  // 리스트의 맨 끝 데이터 삭제 : 탐색 O(n) + 삭제 O(1) => O(n)
+  // 리스트의 맨 끝 데이터 삭제 : 탐색 O(1) + 삭제 O(1) => O(1)
   removeLast() {
     const removeNode = this.tail;
 
     if (this.isEmpty()) {
-      console.log('이미 데이터가 존재 하지 않습니다.');
+      console.log('이미 데이터가 존재하지 않습니다.\n');
 
       return;
     }
 
-    if (this.length === 1) {
+    if (this.size() === 1) {
       this.head = null;
       this.tail = null;
-
-      this.length--;
-
-      return removeNode.data;
+    } else {
+      this.tail = this.tail.prev;
+      this.tail.next = this.head;
     }
-
-    let curNode = this.head;
-    while (curNode.link !== this.tail) {
-      curNode = curNode.link;
-    }
-
-    curNode.link = null;
-    this.tail = curNode;
 
     this.length--;
 
-    return removeNode.data;
+    return removeNode;
   }
 
   // 리스트의 맨 앞에 데이터 삽입 : 탐색 O(1) + 삽입 O(1) => O(1)
@@ -89,10 +88,12 @@ class SinglyLinkedList {
       this.head = newNode;
       this.tail = newNode;
     } else {
-      const temp = this.head;
+      this.head.prev = newNode;
+      newNode.next = this.head;
 
       this.head = newNode;
-      this.head.link = temp;
+      this.head.prev = this.tail;
+      this.tail.next = this.head;
     }
 
     this.length++;
@@ -105,7 +106,7 @@ class SinglyLinkedList {
     const removeNode = this.head;
 
     if (this.isEmpty()) {
-      console.log('이미 데이터가 존재하지 않습니다.');
+      console.log('이미 데이터가 존재하지 않습니다.\n');
 
       return;
     }
@@ -114,7 +115,9 @@ class SinglyLinkedList {
       this.head = null;
       this.tail = null;
     } else {
-      this.head = removeNode.link;
+      this.head = removeNode.next;
+      this.head.prev = this.tail;
+      this.tail.next = this.head;
     }
 
     this.length--;
@@ -140,8 +143,10 @@ class SinglyLinkedList {
     const newNode = new Node(value);
     const prevNode = this.find(idx - 1);
 
-    newNode.link = prevNode.link;
-    prevNode.link = newNode;
+    prevNode.next.prev = newNode;
+    newNode.next = prevNode.next;
+    prevNode.next = newNode;
+    newNode.prev = prevNode;
 
     this.length++;
 
@@ -163,10 +168,11 @@ class SinglyLinkedList {
       return this.removeLast();
     }
 
-    const prevNode = this.find(idx - 1);
-    const removeNode = prevNode.link;
+    const removeNode = this.find(idx);
+    const prevNode = removeNode.prev;
 
-    prevNode.link = removeNode.link;
+    prevNode.next = removeNode.next;
+    removeNode.next.prev = prevNode;
 
     this.length--;
 
@@ -180,12 +186,16 @@ class SinglyLinkedList {
 
   // 리스트의 요소들을 보기 쉽게 프린트
   printList() {
-    let cur = this.head;
+    let curNode = this.head;
     let str = '';
 
-    while (cur) {
-      str += cur.data + ' ';
-      cur = cur.link;
+    while (curNode) {
+      
+      str += curNode.data + ' ';
+      curNode = curNode.next;
+
+      if(curNode === this.head) break;
+
     }
 
     if (str.length === 0) {
@@ -202,34 +212,49 @@ class SinglyLinkedList {
   }
 }
 
-const singlyLinkedList = new SinglyLinkedList();
+const circularLinkedList = new CircularLinkedList();
 
-singlyLinkedList.append(1);
-singlyLinkedList.printList();
+circularLinkedList.append(1);
+circularLinkedList.printList();
 
-singlyLinkedList.append(2);
-singlyLinkedList.printList();
+circularLinkedList.append(2);
+circularLinkedList.printList();
 
-singlyLinkedList.removeLast();
-singlyLinkedList.printList();
+circularLinkedList.append(3);
+circularLinkedList.printList();
 
-singlyLinkedList.removeLast();
-singlyLinkedList.printList();
+circularLinkedList.removeLast();
+circularLinkedList.printList();
 
-singlyLinkedList.prepend(1);
-singlyLinkedList.printList();
+circularLinkedList.removeLast();
+circularLinkedList.printList();
 
-singlyLinkedList.prepend(2);
-singlyLinkedList.printList();
+circularLinkedList.removeLast();
+circularLinkedList.printList();
 
-singlyLinkedList.removeFirst();
-singlyLinkedList.printList();
+circularLinkedList.prepend(1);
+circularLinkedList.printList();
 
-singlyLinkedList.insert(1, 2);
-singlyLinkedList.printList();
+circularLinkedList.prepend(2);
+circularLinkedList.printList();
 
-singlyLinkedList.insert(1, 3);
-singlyLinkedList.printList();
+circularLinkedList.prepend(3);
+circularLinkedList.printList();
 
-singlyLinkedList.remove(1);
-singlyLinkedList.printList();
+circularLinkedList.removeFirst();
+circularLinkedList.printList();
+
+circularLinkedList.removeFirst();
+circularLinkedList.printList();
+
+
+circularLinkedList.insert(1, 2);
+circularLinkedList.printList();
+
+circularLinkedList.insert(1, 3);
+circularLinkedList.printList();
+
+circularLinkedList.remove(1);
+circularLinkedList.printList();
+
+console.log(circularLinkedList);

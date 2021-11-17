@@ -1,3 +1,50 @@
+class Queue {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.length = 0;
+  }
+
+  enqueue(node) {
+    if(this.size() === 0) {
+      this.head = this.tail = node;
+    } else {
+      this.tail.next = node;
+      this.tail = node;
+    }
+
+    this.length++;
+
+    return;
+  }
+
+  dequeue() {
+    if(this.size() === 0) {
+      console.log('큐가 이미 비었습니다.');
+      return;
+    }
+
+    const deleteNode = this.head;
+
+    if(this.size() === 1) {
+      this.head = null;
+      this.tail = null;
+    } else {
+
+      this.head = deleteNode.next;
+    }
+
+    this.length--;
+
+    return deleteNode;
+
+  }
+  
+  size() {
+    return this.length;
+  }
+}
+
 class Node {
   constructor(value = '') {
     this.value = value; //현재 경로까지의 누적값
@@ -37,13 +84,43 @@ class Trie {
       if (curNode.child[char]) {
         curNode = curNode.child[char];
       } else {
-        return '해당 단어를 찾지 못했습니다.';
+        return false;
       }
     }
 
-    return curNode.value;
+    return curNode;
+  }
+
+  // 자동완성기능
+  autoComplete(string) {
+
+    const findNode = this.search(string); // 자동검색을 위한 입력 단어의 노드
+
+    if(!findNode) return; // 입력단어가 존재 하지 않는 경우
+
+    const queue = new Queue();
+    const result = [] // 자동완성단어의 리스트
+
+    queue.enqueue(findNode);
+
+    while(queue.size()) {
+
+      const curNode = queue.dequeue();
+
+      if(curNode.end) result.push(curNode.value);
+
+      Object.values(curNode.child).forEach((node) => {
+        if(node) queue.enqueue(node);
+
+      })
+      
+    }
+    
+    return result.sort(); // 자동완성된 단어들을 사전 순으로 정렬하여 반환하였다.
   }
 }
+
+
 
 const trie = new Trie();
 
@@ -52,7 +129,9 @@ trie.insert('bee');
 trie.insert('can');
 trie.insert('cat');
 trie.insert('cd');
+trie.insert('catalina');
 
+console.log(trie.autoComplete('cat'));
 console.log(trie.search('can')); // 찾아야함
 console.log(trie.search('cbn'));
 console.log(trie.search('bee')); // 찾아야함

@@ -163,6 +163,10 @@ class DoublyLinkedList {
 
     prevNode.next = removeNode.next;
     removeNode.next.prev = prevNode;
+
+    this.length--;
+
+    return removeNode;
   }
 
   // 리스트의 데이터 포함 여부
@@ -183,10 +187,14 @@ class DoublyLinkedList {
     if (str.length === 0) {
       console.log('데이터가 존재하지 않습니다.\n');
     } else {
-      console.log(`List Size : ${this.length} \n${str} \n`);
+      console.log(`List Size : ${this.size()} \n${str} \n`);
     }
 
     return;
+  }
+
+  size() {
+    return this.length;
   }
 }
 
