@@ -1,16 +1,20 @@
 class MaxHeap {
   constructor() {
     this.heap = [];
+    this.size = 0;
   }
 
   // 삽입연산 : 힙을 구성
   insert(value) {
     this.heap.push(value);
     this.moveUp();
+    this.size++;
   }
 
   // 삭제연산 : 최댓값을 뽑아내는 연산
   pop() {
+    if (this.size === 0) return;
+
     // 최대값을 저장
     const max = this.heap[0];
 
@@ -18,6 +22,7 @@ class MaxHeap {
     this.heap[0] = this.heap.pop();
     // 루트노드 부터 아래로 대소 비교 시작하여 위치 조정
     this.moveDown(0);
+    this.size--;
 
     return max;
   }
@@ -43,19 +48,18 @@ class MaxHeap {
   }
 
   // 힙의 상단에서 부터 하단으로 값을 변경한다.
-  moveDown(idx) {
+  moveDown(idx = 0) {
     const leftIdx = 2 * idx + 1;
     const rightIdx = 2 * idx + 2;
-    const length = this.heap.length;
     let maxIdx = idx;
 
     // 힙의 왼쪽 자식과 변경 여부
-    if (leftIdx < length && this.heap[leftIdx] > this.heap[maxIdx]) {
+    if (leftIdx < this.size && this.heap[leftIdx] > this.heap[maxIdx]) {
       maxIdx = leftIdx;
     }
 
     // 힙의 왼쪽 자식으로 인덱스 바뀌어 있어도 오른쪽이 더 큰 요소였다면 오른쪽 인덱스 요소로 변경된다.
-    if (rightIdx < length && this.heap[rightIdx] > this.heap[maxIdx]) {
+    if (rightIdx < this.size && this.heap[rightIdx] > this.heap[maxIdx]) {
       maxIdx = rightIdx;
     }
 
@@ -83,5 +87,9 @@ maxHeap.insert(3);
 
 console.log(maxHeap.heap);
 
-maxHeap.pop();
-console.log(maxHeap.heap);
+const result = [];
+while (maxHeap.size !== 0) {
+  result.push(maxHeap.pop());
+}
+
+console.log(result);
