@@ -14,6 +14,10 @@ class MaxHeap {
   // 삭제연산 : 최댓값을 뽑아내는 연산
   pop() {
     if (this.size === 0) return;
+    if (this.size === 1) {
+      this.size--;
+      return this.heap.pop();
+    }
 
     // 최대값을 저장
     const max = this.heap[0];

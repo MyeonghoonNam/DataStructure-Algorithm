@@ -13,7 +13,11 @@ class MinHeap {
 
   // 삭제연산 : 최솟값을 뽑아내는 연산
   pop() {
-    if (this.heap.length === 0) return;
+    if (this.size === 0) return;
+    if (this.size === 1) {
+      this.size--;
+      return this.heap.pop();
+    }
 
     // 최솟값을 저장
     const min = this.heap[0];
