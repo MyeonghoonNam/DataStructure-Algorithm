@@ -7,8 +7,8 @@ class MinHeap {
   // 삽입연산 : 힙을 구성
   insert(value) {
     this.heap.push(value);
-    this.moveUp();
     this.size++;
+    this.moveUp();
   }
 
   // 삭제연산 : 최솟값을 뽑아내는 연산
@@ -24,9 +24,9 @@ class MinHeap {
 
     // 힙의 가장 마지막 요소를 루트에 저장
     this.heap[0] = this.heap.pop();
+    this.size--;
     // 루트노드 부터 아래로 대소 비교 시작하여 위치 조정
     this.moveDown(0);
-    this.size--;
 
     return min;
   }
