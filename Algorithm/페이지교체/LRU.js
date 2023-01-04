@@ -6,21 +6,18 @@
 class LRU {
   constructor(size) {
     this.cache = [];
-    this.capacity = size;
-    this.missTime = 5;
-    this.hitTime = 1;
+    this.capacity = size; // 캐시 용량 제한
+    this.missTime = 5; // 캐시 있는 경우의 실행시간
+    this.hitTime = 1; // 캐시 없는 경우의 실행시간
   }
 
   put(value) {
     if (this.capacity === this.cache.length) {
       // 캐시 용량 포화
       this.cache.shift();
-      this.cache.push(value);
-    } else {
-      // 캐시 용량 여분 존재
-      this.cache.push(value);
-      // this.capacity++;
     }
+
+    this.cache.push(value);
   }
 
   get(value) {
@@ -29,12 +26,12 @@ class LRU {
     // 캐시에 값 있는 경우
     if (index !== -1) {
       this.put(...this.cache.splice(index, 1));
-      return this.hitTime; // 캐시 있는 경우의 실행시간
+      return this.hitTime;
     }
 
     // 캐시에 값 없는 경우
     this.put(value);
-    return this.missTime; // 캐시 없는 경우의 실행시간
+    return this.missTime;
   }
 }
 
